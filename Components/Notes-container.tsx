@@ -6,7 +6,7 @@ const notes: NoteProps[] = [
   {
     date: '2022-02-14',
     title: 'My first note',
-    content: "This ire is more",
+    content: "This is my first note and You know what i'm gonna create another one then another one",
   },
   {
     date: '2022-02-15',

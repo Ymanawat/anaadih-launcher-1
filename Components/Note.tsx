@@ -19,22 +19,25 @@ const Note = ({ date, title, content }: NoteProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#444444',
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 8,
     width : "45%",
+    borderRadius: 10,
   },
   date: {
-    color: '#aaa',
+    color: '#a5a5a5',
   },
   title: {
+    color: '#e5e5e5',
     fontWeight: 'bold',
     fontSize: 18,
     marginVertical: 5,
   },
   content: {
     fontSize: 16,
+    color:'#e5e5e5',
   },
 });
 

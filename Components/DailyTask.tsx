@@ -1,44 +1,65 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-interface Props {
-  taskName: string;
+type TaskProps = {
+  title: string;
   deadline: string;
   isCompleted: boolean;
-}
+  onDelete: () => void;
+};
 
-const Task: React.FC<Props> = ({ taskName, deadline, isCompleted }) => {
+const Task = ({ title, deadline, isCompleted, onDelete }: TaskProps) => {
+  const tickIcon = isCompleted ? require('./task/filled.png') : require('./task/empty.png');
+
   return (
-    <View style={styles.taskContainer}>
-      <Text style={styles.taskName}>{taskName}</Text>
-      <Text style={styles.deadline}>{deadline}</Text>
-      {isCompleted && (
-        <Text style={styles.checkMark}>✓</Text>
-      )}
-      {
-        !isCompleted && <Text style={styles.checkMark}>🔘</Text>
-      }
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.deadline}>{deadline}</Text>
+      </View>
+      <TouchableOpacity onPress={() => {}}>
+        <Image source={tickIcon} style={styles.tickIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onDelete}>
+        <Image source={require('./task/delete.png')} style={styles.deleteIcon} />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  taskContainer: {
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    backgroundColor : '#454545'
+    padding: 16,
+    backgroundColor:'#444444',
+    marginBottom:12,
+    borderRadius:8,
   },
-  taskName: {
-    fontSize: 18,
+  deleteIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 2,
+    marginLeft: 24,
+    alignItems:'center',
+  },
+  textContainer: {
     flex: 1,
   },
-  deadline: {
+  title: {
     fontSize: 18,
-    marginRight: 10,
+    fontWeight: 'bold',
+    color:'#e5e5e5',
+    marginBottom: 4,
   },
-  checkMark: {
-    fontSize: 18,
+  deadline: {
+    fontSize: 14,
+    color: '#999',
+  },
+  tickIcon: {
+    width: 24,
+    height: 24,
+    alignItems:'center',
   },
 });
 
