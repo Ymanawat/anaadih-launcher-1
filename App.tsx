@@ -110,6 +110,9 @@ const App: React.FC = () => {
         {selectedTab === 'Notes' && (<Notes />)}
       </Animated.View>
       <View style={styles.drawerContainer}>
+        <View>
+
+        </View>
         <Text>App Drawer</Text>
       </View>
     </View>
@@ -118,6 +121,10 @@ const App: React.FC = () => {
 
 const styles = StyleSheet.create({
   
+  text: {
+    fontFamily: 'Poppins-Regular',
+    fontWeight: 'normal',
+  },
   tabTitle1: {
     fontSize: 24,
     color: "#9A9A9A",

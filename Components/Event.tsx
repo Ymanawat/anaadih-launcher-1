@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   dateContainer: {
     alignItems: 'center',
     backgroundColor:'#e5e5e5',
-    padding: 16,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
     borderTopLeftRadius:8,
     borderBottomLeftRadius:8,
   },
