@@ -37,6 +37,7 @@ const Workspace = () => {
       const updatedTasks = [...tasks, newTask];
       await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
       setTasks(updatedTasks);
+      setShowAddTask(false); // hide the AddTask component after adding a task
     } catch (error) {
       console.log(error);
     }

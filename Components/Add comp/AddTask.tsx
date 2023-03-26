@@ -14,17 +14,10 @@ const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleAddTask = async () => {
-    try {
-      const taskObject = { task, deadline: deadline.toLocaleTimeString() };
-      const tasks = await AsyncStorage.getItem('tasks');
-      const tasksArray = tasks ? JSON.parse(tasks) : [];
-      tasksArray.push(taskObject);
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasksArray));
-      setTask('');
-      setDeadline(new Date());
-    } catch (error) {
-      console.log(error);
-    }
+    const _deadline = deadline.getTime().toString();
+    onAddTask(task, _deadline);
+    setTask('');
+    setDeadline(new Date());
   };
   
 
@@ -72,11 +65,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 16,
     textAlign:'center',
     marginBottom:12,
     borderRadius:8,
-    height: '60%'
+    height: '60%',
   },
   input: {
     height: 60,
