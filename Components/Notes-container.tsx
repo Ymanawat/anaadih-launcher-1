@@ -108,9 +108,10 @@ const NotesGrid = () => {
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             renderItem={renderItem}
+            contentContainerStyle={styles.flatList}
           />
           <TouchableOpacity onPress={() => setShowAddNote(true)}>
-            <Text style={styles.addButton}>+ Add Event</Text>
+            <Text style={styles.addButton}>+ Add Note</Text>
           </TouchableOpacity>
         </>
       )}
@@ -124,6 +125,9 @@ const styles = StyleSheet.create({
     marginTop: 16,
     minWidth: "100%",
     minHeight: "100%",
+  },
+  flatList: {
+    minWidth: '100%'
   },
   addButton: {
     fontFamily: "Poppins-Regular",
