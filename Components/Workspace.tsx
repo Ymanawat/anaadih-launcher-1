@@ -1,63 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import DailyTask from './DailyTask';
 import AddTask from './Add comp/AddTask';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import * as Font from 'expo-font';
+
+interface Task {
+  isCompleted: boolean;
+  task: string;
+  deadline: string;
+}
+
 const Workspace = () => {
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+    };
+
+    loadFonts();
+  }, []);
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showAddTask, setShowAddTask] = useState(false);
-  interface Task {
-    task: string;
-    deadline: string;
-  }
 
-  const addTask = (task: string, deadline: string) => {
-    setTasks([...tasks, { task, deadline }]);
+  const addTask = async (task: string, deadline: string) => {
+    const newTask = { task, deadline, isCompleted: false };
+    setTasks([...tasks, newTask]);
     setShowAddTask(false); // hide the AddTask component after adding a task
     
+    try {
+      const updatedTasks = [...tasks, newTask];
+      await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  const completeTask = async (index: number) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].isCompleted = true;
+    setTasks(updatedTasks);
+
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const removeTask = (index: number) => {
+  const removeTask = async (index: number) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
+  
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   useEffect(() => {
-    // Save the tasks whenever they change
-    const saveTasks = async () => {
+    const getTasks = async () => {
       try {
-        await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    saveTasks();
-  }, [tasks]);
-
-  useEffect(() => {
-    // Load the saved tasks when the component mounts
-    const loadTasks = async () => {
-      try {
-        const savedTasks = await AsyncStorage.getItem('tasks');
-        if (savedTasks !== null) {
-          setTasks(JSON.parse(savedTasks));
+        const tasks = await AsyncStorage.getItem('tasks');
+        if (tasks) {
+          setTasks(JSON.parse(tasks));
         }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.log(error);
       }
     };
-    loadTasks();
+    getTasks();
   }, []);
 
   return (
-    <View style={styles.container}>
+    
+    <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
       {!showAddTask && tasks.map((task, index) => (
         <DailyTask
           key={index}
-          Task={task.task}
-          deadline={task.deadline}
+          Task={String(task.task)}
+          deadline={String(task.deadline)}
           isCompleted={false}
           onDelete={() => removeTask(index)}
         />
@@ -72,7 +103,7 @@ const Workspace = () => {
           <Text style={styles.addButton}>+ Add Task</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -81,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1b1b1b',
     marginTop:16,
-    alignItems: 'flex-end',
+    minWidth: '100%'
   },
   addButton: {
     fontFamily: 'Poppins-Regular',

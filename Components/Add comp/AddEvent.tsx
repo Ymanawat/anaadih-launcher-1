@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type AddTaskProps = {
-  onAddTask: (task: string, deadline: string) => void;
+type AddEventProps = {
+  onAddEvent: (date: string, month: string, title: string, time: string, tag: string) => void;
   onCancel: () => void;
 };
 
-const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
-  const [task, setTask] = useState('');
+const AddEvent = ({ onAddEvent, onCancel }: AddEventProps) => {
+  const [eventName, setEventName] = useState('');
   const [deadline, setDeadline] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [eventTag, setEventTag] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
 
-  const handleAddTask = async () => {
-    try {
-      const taskObject = { task, deadline: deadline.toLocaleTimeString() };
-      const tasks = await AsyncStorage.getItem('tasks');
-      const tasksArray = tasks ? JSON.parse(tasks) : [];
-      tasksArray.push(taskObject);
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasksArray));
-      setTask('');
-      setDeadline(new Date());
-    } catch (error) {
-      console.log(error);
-    }
+  const handleAddEvent = () => {
+    const date = deadline.getDate().toString();
+    const month = (deadline.getMonth() + 1).toString();
+    const time = startTime + ' - ' + endTime;
+    onAddEvent(date, month, eventName, time, eventTag);
+    setEventName('');
+    setStartTime('');
+    setEndTime('');
+    setEventTag('');
+    setDeadline(new Date());
   };
-  
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
     setShowDatePicker(false);
@@ -39,26 +38,44 @@ const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Task Name"
-        value={task}
-        onChangeText={setTask}
+        placeholder="Event Name"
+        value={eventName}
+        onChangeText={setEventName}
       />
       <TouchableOpacity
         style={styles.input}
         onPress={() => setShowDatePicker(true)}
       >
-      <Text>{deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12:true})}</Text>
+        <Text>{`${deadline.getDate()}/${deadline.getMonth() + 1}`}</Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
           value={deadline}
-          mode="time"
+          mode="date"
+          is24Hour={true}
+          display="default"
           onChange={handleDateChange}
         />
       )}
+      <TextInput
+        style={styles.input}
+        placeholder="Start Time - End Time"
+        value={`${startTime} - ${endTime}`}
+        onChangeText={(text) => {
+          const [newStartTime, newEndTime] = text.split('-').map((str) => str.trim());
+          setStartTime(newStartTime);
+          setEndTime(newEndTime);
+        }}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Event Tag"
+        value={eventTag}
+        onChangeText={setEventTag}
+      />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.Addbutton} onPress={handleAddTask}>
-          <Text style={styles.buttonText}>Add Task</Text>
+        <TouchableOpacity style={styles.Addbutton} onPress={handleAddEvent}>
+          <Text style={styles.buttonText}>Add Event</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={onCancel}>
           <Text style={styles.buttonText}>Cancel</Text>
@@ -67,6 +84,7 @@ const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -121,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTask;
+export default AddEvent;

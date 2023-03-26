@@ -13,7 +13,6 @@ async function loadFonts() {
   await Font.loadAsync({
     'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
     'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
-    // Add more font styles if needed
   });
 }
 
@@ -214,7 +213,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-end',
     padding: 10,
-    
   },
   transparentButton: {
     backgroundColor: 'transparent',
