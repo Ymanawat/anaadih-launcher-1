@@ -1,23 +1,28 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 type TaskProps = {
-  title: string;
+  Task: string;
   deadline: string;
   isCompleted: boolean;
   onDelete: () => void;
 };
 
-const Task = ({ title, deadline, isCompleted, onDelete }: TaskProps) => {
-  const tickIcon = isCompleted ? require('./task/filled.png') : require('./task/empty.png');
+const DailyTask = ({ Task, deadline, isCompleted, onDelete }: TaskProps) => {
+  const [completed, setCompleted] = useState(isCompleted);
+  const tickIcon = completed ? require('./task/filled.png') : require('./task/empty.png');
+
+  const handleToggleCompleted = () => {
+    setCompleted(!completed);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
+      <Text style={[completed && styles.completedTask, styles.Task]}>{Task}</Text>
         <Text style={styles.deadline}>{deadline}</Text>
       </View>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={handleToggleCompleted}>
         <Image source={tickIcon} style={styles.tickIcon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={onDelete}>
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
   },
-  title: {
+  Task: {
     fontSize: 18,
     fontWeight: 'bold',
     color:'#e5e5e5',
@@ -61,6 +66,13 @@ const styles = StyleSheet.create({
     height: 24,
     alignItems:'center',
   },
+  completedTask: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color:'#e5e5e5',
+    marginBottom: 4,
+    textDecorationLine: 'line-through',
+  }
 });
 
-export default Task;
+export default DailyTask;
