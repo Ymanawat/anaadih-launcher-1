@@ -93,7 +93,7 @@ const Events = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+    <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
       {events && events.length > 0 ? (
         events.map((event) => (
           <TouchableOpacity
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1b1b1b",
     marginTop: 16,
-    alignItems: "flex-end",
+    minWidth: '100%',
   },
   addButton: {
     fontFamily: "Poppins-Regular",
