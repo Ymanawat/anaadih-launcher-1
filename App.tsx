@@ -127,14 +127,17 @@ const styles = StyleSheet.create({
   },
   tabTitle1: {
     fontSize: 24,
+    padding: 4,
     color: "#9A9A9A",
   },
   tabTitle: {
     fontSize: 20,
+    padding: 4,
     color: "#9A9A9A",
   },
   tabTitleBold :{
     fontSize: 20,
+    padding: 4,
     textAlign:'center',
     color: "white",
   },
