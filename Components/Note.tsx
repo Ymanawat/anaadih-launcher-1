@@ -27,16 +27,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   date: {
+    fontFamily: 'Poppins-Regular',
     color: '#a5a5a5',
   },
   title: {
+    fontFamily: 'Poppins-Regular',
     color: '#e5e5e5',
     fontWeight: 'bold',
     fontSize: 18,
     marginVertical: 5,
   },
   content: {
-    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
     color:'#e5e5e5',
   },
 });
