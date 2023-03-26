@@ -94,7 +94,7 @@ const Events = () => {
 
   return (
     <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
-      {events && events.length > 0 ? (
+      {!showAddEvent && events && events.length > 0 ? (
         events.map((event) => (
           <TouchableOpacity
             key={`${event.date}-${event.month}-${event.title}`}
@@ -110,7 +110,7 @@ const Events = () => {
           </TouchableOpacity>
         ))
       ) : (
-        <Text>No events found</Text>
+        <Text></Text>
       )}
 
       {showAddEvent ? (

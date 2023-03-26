@@ -89,12 +89,9 @@ const AddEvent = ({ onAddEvent, onCancel }: AddEventProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    alignItems: 'center',
-    padding: 16,
     textAlign:'center',
-    marginBottom:12,
     borderRadius:8,
-    height: '60%'
+    height: '60%',
   },
   input: {
     height: 60,
