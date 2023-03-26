@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 
 const App: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('Workspace');
-
+  const [currentTime, setCurrentTime] = useState(new Date());
   const contentX = useRef(new Animated.Value(0)).current;
   const [indicatorX] = useState(new Animated.Value(0));
 
@@ -75,11 +75,23 @@ const App: React.FC = () => {
     }).start();
   }, [selectedTab, indicatorX]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+  
+  const options = { weekday: 'short', day: 'numeric', month: 'short' };
+  const time = currentTime.toLocaleTimeString();
+  const date = currentTime.toLocaleDateString();
+  const dateTimeString = `${time} ${date}`;
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.username}>Hey, Yogendra Manawat</Text>
-        <Text style={styles.date}>22:53 Tue 14 Feb</Text>
+        <Text style={styles.username}>Hey! </Text>
+        <Text style={styles.date}>{dateTimeString}</Text>
       </View>
       
       <View style={styles.tabsContainer}>
