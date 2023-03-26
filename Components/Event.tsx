@@ -46,23 +46,28 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius:8,
   },
   date: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 24,
     fontWeight: 'bold',
   },
   month: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 14,
     fontWeight: 'bold',
   },
   detailsContainer: {
+    fontFamily: 'Poppins-Regular',
     flex: 1,
     marginLeft: 20,
   },
   title: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 16,
     fontWeight: 'bold',
     color:'#e5e5e5',
   },
   deadline: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 14,
     color:'#e5e5e5',
   },
@@ -73,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tag: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 12,
     color: '#e5e5e5',
   },

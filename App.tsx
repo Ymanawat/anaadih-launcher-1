@@ -1,9 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, PanResponder, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, Button, PanResponder, TouchableOpacity, Animated } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Workspace from './Components/Workspace';
 import Events from './Components/Events-container';
 import Notes from './Components/Notes-container';
+import Text from './assets/Text';
+
+
+import * as Font from 'expo-font';
+
+async function loadFonts() {
+  await Font.loadAsync({
+    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    // Add more font styles if needed
+  });
+}
+
+loadFonts();
+
+
+
 
 const Stack = createStackNavigator();
 
@@ -127,17 +144,16 @@ const styles = StyleSheet.create({
   },
   tabTitle1: {
     fontSize: 24,
-    padding: 4,
     color: "#9A9A9A",
   },
   tabTitle: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 20,
-    padding: 4,
     color: "#9A9A9A",
   },
   tabTitleBold :{
+    fontFamily: 'Poppins-Regular',
     fontSize: 20,
-    padding: 4,
     textAlign:'center',
     color: "white",
   },
@@ -163,6 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerContainer: {
+    
     width: '100%',
     alignItems : 'flex-start',
     justifyContent: 'space-between',
@@ -171,10 +188,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   username: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 20,
     color : "#e5e5e5"
   },
   date: {
+    fontFamily: 'Poppins-Regular',
     fontSize: 20,
     color : "#e5e5e5"
   },
@@ -195,6 +214,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-end',
     padding: 10,
+    
   },
   transparentButton: {
     backgroundColor: 'transparent',

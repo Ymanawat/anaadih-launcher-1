@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   addButton: {
+    fontFamily: 'Poppins-Regular',
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
