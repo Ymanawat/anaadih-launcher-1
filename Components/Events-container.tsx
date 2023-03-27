@@ -94,8 +94,7 @@ const Events = () => {
 
   return (
     <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
-      {!showAddEvent && events && events.length > 0 ? (
-        events.map((event) => (
+      {!showAddEvent && events && events.length > 0 && events.map((event) => (
           <TouchableOpacity
             key={`${event.date}-${event.month}-${event.title}`}
             onLongPress={() => confirmDelete(event)}
@@ -108,10 +107,7 @@ const Events = () => {
               tag={String(event.tag)}
             />
           </TouchableOpacity>
-        ))
-      ) : (
-        <Text></Text>
-      )}
+        ))}
 
       {showAddEvent ? (
         <AddEvent

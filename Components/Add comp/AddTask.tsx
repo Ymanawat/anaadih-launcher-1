@@ -24,9 +24,13 @@ const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
     setShowDatePicker(false);
     if (selectedDate) {
-      setDeadline(selectedDate);
+      const newDeadline = new Date(deadline.getTime());
+      newDeadline.setHours(selectedDate.getHours());
+      newDeadline.setMinutes(selectedDate.getMinutes());
+      setDeadline(newDeadline);
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -40,7 +44,7 @@ const AddTask = ({ onAddTask, onCancel }: AddTaskProps) => {
         style={styles.input}
         onPress={() => setShowDatePicker(true)}
       >
-      <Text>{deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12:true})}</Text>
+      <Text>{deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})}</Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
